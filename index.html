@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Mahe — dépôt cloné</title>
+	<style>
+		body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.5;margin:0}
+		header{background:#0b7285;color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+		nav a{color:#fff;margin-left:12px;text-decoration:none;font-weight:600}
+		.container{padding:20px}
+		.card{background:#f8f9fa;border-radius:8px;padding:16px;margin-bottom:16px}
+		ul.files{list-style:none;padding:0;margin:0}
+		ul.files li{padding:6px 0}
+		a.filelink{color:#0b7285;text-decoration:none}
+		.small{font-size:0.9em;color:#555}
+		footer{padding:12px 20px;text-align:center;color:#666}
+		button{background:#0b7285;color:#fff;border:0;padding:8px 12px;border-radius:6px;cursor:pointer}
+	</style>
+</head>
+<body>
+	<header>
+		<div>
+			<strong>Mahe — dépôt local</strong>
+			<span class="small">&nbsp;· affichage rapide</span>
+		</div>
+		<nav>
+			<a href="#home">Accueil</a>
+			<a href="#repo">Dépôt</a>
+			<a href="#readme">README</a>
+			<a href="https://github.com/mahegiogetiluciani-stack/mahe-alycia" target="_blank">GitHub</a>
+		</nav>
+	</header>
+
+	<main class="container">
+		<section id="home" class="card">
+			<h2>Bienvenue</h2>
+			<p>Page rapide listant les fichiers du dépôt cloné <strong>`mahe-alycia`</strong>.</p>
+			<p class="small">Utilisez le menu pour naviguer. Les liens pointent vers le dossier <code>mahe-alycia/</code> dans ce workspace.</p>
+		</section>
+
+		<section id="repo" class="card">
+			<h3>Dépôt — fichiers</h3>
+			<ul class="files">
+				<li><a class="filelink" href="./mahe-alycia/agacent.py">agacent.py</a></li>
+				<li><a class="filelink" href="./mahe-alycia/cartdidentiter.py">cartdidentiter.py</a></li>
+				<li><a class="filelink" href="./mahe-alycia/cours.py">cours.py</a></li>
+				<li><a class="filelink" href="./mahe-alycia/cours.pyreadme.md">cours.pyreadme.md</a></li>
+				<li><a class="filelink" href="./mahe-alycia/devinette.py">devinette.py</a></li>
+				<li><a class="filelink" href="./mahe-alycia/exemplez.py">exemplez.py</a></li>
+				<li><a class="filelink" href="./mahe-alycia/exemple_mahe.py">exemple_mahe.py</a></li>
+				<li><a class="filelink" href="./mahe-alycia/mark.py">mark.py</a></li>
+				<li><a class="filelink" href="./mahe-alycia/nv_exercice.py">nv_exercice.py</a></li>
+				<li><a class="filelink" href="./mahe-alycia/README.md">README.md</a></li>
+				<li><a class="filelink" href="./mahe-alycia/records.py">records.py</a></li>
+				<li><a class="filelink" href="./mahe-alycia/type.py">type.py</a></li>
+				<li><a class="filelink" href="./mahe-alycia/voyelles.py">voyelles.py</a></li>
+			</ul>
+		</section>
+
+		<section id="readme" class="card">
+			<h3>README (aperçu)</h3>
+			<div style="margin-bottom:8px">
+				<button id="loadReadme">Charger README.md</button>
+				<button id="hideReadme" style="margin-left:8px;display:none">Masquer</button>
+			</div>
+			<pre id="readmeContent" style="white-space:pre-wrap;display:none;background:#fff;padding:12px;border-radius:6px;border:1px solid #e9ecef;overflow:auto;max-height:420px"></pre>
+			<p id="readmeHint" class="small">Si le fetch échoue, servez le dossier via un serveur local (ex. <code>python -m http.server</code>).</p>
+		</section>
+	</main>
+
+	<footer>
+		<span class="small">Fichiers listés depuis <strong>`mahe-alycia/`</strong> — ouvert localement.</span>
+	</footer>
+
+	<script>
+		document.getElementById('loadReadme').addEventListener('click', async function(){
+			const btn = this;
+			btn.disabled = true; btn.textContent = 'Chargement...';
+			try{
+				const res = await fetch('./mahe-alycia/README.md');
+				if(!res.ok) throw new Error(res.statusText);
+				const txt = await res.text();
+				const pre = document.getElementById('readmeContent');
+				pre.textContent = txt; pre.style.display='block';
+				document.getElementById('hideReadme').style.display='inline-block';
+			}catch(e){
+				alert('Échec du chargement du README : ' + e.message);
+			}finally{ btn.disabled=false; btn.textContent='Charger README.md'; }
+		});
+		document.getElementById('hideReadme').addEventListener('click', function(){
+			document.getElementById('readmeContent').style.display='none';
+			this.style.display='none';
+		});
+	</script>
+</body>
+</html>
+
